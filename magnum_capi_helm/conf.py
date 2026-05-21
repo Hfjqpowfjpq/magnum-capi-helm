@@ -182,6 +182,12 @@ capi_helm_opts = [
         help="Domain for services in created clusters.",
     ),
     cfg.StrOpt(
+        "cni_type",
+        default="calico",
+        choices=["calico", "cilium"],
+        help="CNI plugin to install in the cluster addons.",
+    ),
+    cfg.StrOpt(
         "api_resources",
         default={},
         help=(

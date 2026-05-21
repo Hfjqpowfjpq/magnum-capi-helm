@@ -857,6 +857,13 @@ class Driver(driver.Driver):
             CONF.capi_helm.service_domain,
         )
 
+    def _get_cni_type(self, cluster):
+        return self._label(
+            cluster,
+            "cni_type",
+            CONF.capi_helm.cni_type,
+        )
+
     def _storageclass_definitions(self, context, cluster):
         """Query cinder API to retrieve list of available volume types.
 
@@ -1100,6 +1107,7 @@ class Driver(driver.Driver):
             },
             "nodeGroups": self._process_node_groups(cluster, nodegroups),
             "addons": {
+                "cni": {"type": self._get_cni_type(cluster)},
                 "openstack": {
                     "csiCinder": self._storageclass_definitions(
                         context, cluster
